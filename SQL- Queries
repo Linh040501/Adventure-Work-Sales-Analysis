@@ -1,0 +1,385 @@
+-- Create or replace table with all joined data
+CREATE OR REPLACE TABLE `porfolio-project-432006.Adventure_Work_Sales.JoinedData` AS
+SELECT
+    c.CustomerID,
+    c.FirstName AS CustomerFirstName,
+    c.LastName AS CustomerLastName,
+    c.FullName AS CustomerFullName,
+    e.EmployeeID,
+    e.FirstName AS EmployeeFirstName,
+    e.LastName AS EmployeeLastName,
+    e.FullName AS EmployeeFullName,
+    e.JobTitle,
+    e.OrganizationLevel,
+    e.MaritalStatus,
+    e.Gender,
+    e.Territory,
+    e.Country,
+    e.`Group` AS EmployeeGroup,
+    o.SalesOrderID,
+    o.OrderDate,
+    o.DueDate,
+    o.ShipDate,
+    o.Subtotal,
+    o.TaxAmt,
+    o.Freight,
+    o.TotalDue,
+    o.ProductID AS OrderProductID,
+    o.OrderQty,
+    o.UnitPrice,
+    o.UnitPriceDiscount,
+    o.LineTotal,
+    p.ProductID AS JoinedProductID,
+    p.ProductNumber,
+    p.ProductName,
+    p.ModelName,
+    p.MakeFlag,
+    p.StandardCost,
+    p.ListPrice,
+    p.SubCategoryID,
+    ps.SubCategoryID AS JoinedSubCategoryID,
+    ps.CategoryID,
+    ps.SubCategoryName,
+    v.VendorID,
+    v.VendorName,
+    v.AccountNumber,
+    v.CreditRating,
+    v.ActiveFlag
+FROM `porfolio-project-432006.Adventure_Work_Sales.customers` AS c
+JOIN `porfolio-project-432006.Adventure_Work_Sales.orders` AS o
+    ON c.CustomerID = o.CustomerID
+JOIN `porfolio-project-432006.Adventure_Work_Sales.employees` AS e
+    ON o.EmployeeID = e.EmployeeID
+JOIN `porfolio-project-432006.Adventure_Work_Sales.products` AS p
+    ON o.ProductID = p.ProductID
+JOIN `porfolio-project-432006.Adventure_Work_Sales.productsubcategories` AS ps
+    ON p.SubCategoryID = ps.SubCategoryID
+LEFT JOIN `porfolio-project-432006.Adventure_Work_Sales.vendorproduct` AS vp
+    ON p.ProductID = vp.ProductID
+LEFT JOIN `porfolio-project-432006.Adventure_Work_Sales.vendors` AS v
+    ON vp.VendorID = v.VendorID;
+
+-- Calculate percentage of NULL values for each column
+WITH ColumnStats AS (
+    SELECT
+        'CustomerID' AS column_name,
+        COUNTIF(CustomerID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'CustomerFirstName' AS column_name,
+        COUNTIF(CustomerFirstName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'CustomerLastName' AS column_name,
+        COUNTIF(CustomerLastName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'CustomerFullName' AS column_name,
+        COUNTIF(CustomerFullName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'EmployeeID' AS column_name,
+        COUNTIF(EmployeeID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'EmployeeFirstName' AS column_name,
+        COUNTIF(EmployeeFirstName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'EmployeeLastName' AS column_name,
+        COUNTIF(EmployeeLastName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'EmployeeFullName' AS column_name,
+        COUNTIF(EmployeeFullName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'JobTitle' AS column_name,
+        COUNTIF(JobTitle IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'OrganizationLevel' AS column_name,
+        COUNTIF(OrganizationLevel IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'MaritalStatus' AS column_name,
+        COUNTIF(MaritalStatus IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'Gender' AS column_name,
+        COUNTIF(Gender IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'Territory' AS column_name,
+        COUNTIF(Territory IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'Country' AS column_name,
+        COUNTIF(Country IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'EmployeeGroup' AS column_name,
+        COUNTIF(EmployeeGroup IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'SalesOrderID' AS column_name,
+        COUNTIF(SalesOrderID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'OrderDate' AS column_name,
+        COUNTIF(OrderDate IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'DueDate' AS column_name,
+        COUNTIF(DueDate IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ShipDate' AS column_name,
+        COUNTIF(ShipDate IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'Subtotal' AS column_name,
+        COUNTIF(Subtotal IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'TaxAmt' AS column_name,
+        COUNTIF(TaxAmt IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'Freight' AS column_name,
+        COUNTIF(Freight IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'TotalDue' AS column_name,
+        COUNTIF(TotalDue IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'OrderProductID' AS column_name,
+        COUNTIF(OrderProductID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'OrderQty' AS column_name,
+        COUNTIF(OrderQty IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'UnitPrice' AS column_name,
+        COUNTIF(UnitPrice IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'UnitPriceDiscount' AS column_name,
+        COUNTIF(UnitPriceDiscount IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'LineTotal' AS column_name,
+        COUNTIF(LineTotal IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'JoinedProductID' AS column_name,
+        COUNTIF(JoinedProductID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ProductNumber' AS column_name,
+        COUNTIF(ProductNumber IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ProductName' AS column_name,
+        COUNTIF(ProductName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ModelName' AS column_name,
+        COUNTIF(ModelName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'MakeFlag' AS column_name,
+        COUNTIF(MakeFlag IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'StandardCost' AS column_name,
+        COUNTIF(StandardCost IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ListPrice' AS column_name,
+        COUNTIF(ListPrice IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'SubCategoryID' AS column_name,
+        COUNTIF(SubCategoryID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'JoinedSubCategoryID' AS column_name,
+        COUNTIF(JoinedSubCategoryID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'CategoryID' AS column_name,
+        COUNTIF(CategoryID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'SubCategoryName' AS column_name,
+        COUNTIF(SubCategoryName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'VendorID' AS column_name,
+        COUNTIF(VendorID IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'VendorName' AS column_name,
+        COUNTIF(VendorName IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'AccountNumber' AS column_name,
+        COUNTIF(AccountNumber IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'CreditRating' AS column_name,
+        COUNTIF(CreditRating IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+    UNION ALL
+    SELECT
+        'ActiveFlag' AS column_name,
+        COUNTIF(ActiveFlag IS NULL) AS null_count,
+        COUNT(*) AS total_count
+    FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`
+)
+SELECT
+    column_name,
+    null_count,
+    total_count,
+    (null_count / total_count) * 100 AS null_percentage
+FROM ColumnStats;
+
+-- Create a new table excluding columns with more than 70% null values
+CREATE OR REPLACE TABLE `porfolio-project-432006.Adventure_Work_Sales.CleanedData` AS
+SELECT
+    EmployeeFirstName,
+    EmployeeID,
+    Country,
+    CustomerID,
+    CustomerFullName,
+    CustomerFirstName,
+    EmployeeLastName,
+    CustomerLastName,
+    CategoryID,
+    SubCategoryName,
+    MakeFlag,
+    MaritalStatus,
+    JobTitle,
+    JoinedSubCategoryID,
+    EmployeeFullName,
+    SubCategoryID,
+    ListPrice,
+    UnitPriceDiscount,
+    StandardCost,
+    ProductNumber,
+    OrderDate,
+    Territory,
+    OrderQty,
+    TaxAmt,
+    UnitPrice,
+    ProductName,
+    ModelName,
+    OrderProductID,
+    JoinedProductID,
+    TotalDue,
+    Freight,
+    LineTotal,
+    DueDate,
+    EmployeeGroup,
+    OrganizationLevel,
+    ShipDate,
+    Gender,
+    SalesOrderID
+FROM `porfolio-project-432006.Adventure_Work_Sales.JoinedData`;
+
+-- Create a new table excluding all remains null values
+CREATE OR REPLACE TABLE `porfolio-project-432006.Adventure_Work_Sales.CleanedDataFinal` AS
+SELECT *
+FROM `porfolio-project-432006.Adventure_Work_Sales.CleanedData`
+WHERE
+    Country IS NOT NULL
+    AND EmployeeGroup IS NOT NULL
+    AND Territory IS NOT NULL;
