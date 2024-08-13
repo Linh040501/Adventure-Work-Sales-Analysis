@@ -10,9 +10,17 @@ This project focuses on the analysis of product category performance over time. 
 - **QuickDBD**: For database schema visualization.
 ![QuickDBD-Free Diagram (1)](https://github.com/user-attachments/assets/2ec78dd5-3859-45a9-884b-272a892a7966)
 
+
 ## Data Pre-processing:
 - **Techniques**: Data filtering, exclusion, transformation, partitioning, merging, and data visualization.
 - **Schema Design**: The data schema was initially designed using the QuickDBD tool.
+## Data Analysis Process
+1. **Download CSV Dataset**: Obtain the dataset from GitHub.
+2. **Design Data Schema**: Use QuickDBD tool to design the data schema.
+3. **Import Schema**: Import the designed schema into a database structure.
+4. **Pre-process Data**: Clean and prepare data using SQL.
+5. **Connect to Tableau**: Link the database to Tableau for analysis.
+6. **Perform Calculations and Create Visualizations**: Conduct data analysis and generate visualizations in Tableau.
 
 ## Data Processing Using SQL
 - **Joined Tables**: Combined all relevant tables.
@@ -30,4 +38,5 @@ This project focuses on the analysis of product category performance over time. 
 - **Customer Purchase Patterns**: Customers who place more frequent orders contribute to higher sales revenue. However, many customers make infrequent purchases.
 - **Regional Revenue**: Southwest America leads in sales, followed by Central America. Australia represents the smallest market, which could impact marketing and growth strategies.
 - **Employee Individual Performance**: The highest-performing employee was Linda Mitchell, while the lowest was Lynn Tsoflias.
+- ![Dashboard 1](https://github.com/user-attachments/assets/ca04a893-8e96-4df3-98ba-1cd260882c92)
 
