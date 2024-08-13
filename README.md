@@ -18,12 +18,9 @@ This project focuses on the analysis of product category performance over time. 
 
   
 ## Data Analysis Process
-1. **Download CSV Dataset**: Obtain the dataset from GitHub.
-2. **Design Data Schema**: Use QuickDBD tool to design the data schema.
-3. **Import Schema**: Import the designed schema into a database structure.
-4. **Pre-process Data**: Clean and prepare data using SQL.
-5. **Connect to Tableau**: Link the database to Tableau for analysis.
-6. **Perform Calculations and Create Visualizations**: Conduct data analysis and generate visualizations in Tableau.
+
+<img width="604" alt="Data Analysis Process Diagram " src="https://github.com/user-attachments/assets/c558924f-520c-49a5-be3c-d2bb7d9dbe90">
+
 
 ## Data Processing Using SQL
 - **Joined Tables**: Combined all relevant tables.
