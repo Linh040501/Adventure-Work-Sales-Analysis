@@ -1,0 +1,145 @@
+-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
+-- Link to schema: https://app.quickdatabasediagrams.com/#/d/HZovvJ
+-- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
+
+
+SET XACT_ABORT ON
+
+BEGIN TRANSACTION QUICKDBD
+
+-- Customer Table
+CREATE TABLE [Customer] (
+    [CustomerID] int  NOT NULL ,
+    [FirstName] varchar(50)  NOT NULL ,
+    [LastName] varchar(50)  NOT NULL ,
+    [FullName] varchar(50)  NOT NULL ,
+    CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED (
+        [CustomerID] ASC
+    )
+)
+
+-- Employee Table
+CREATE TABLE [Employee] (
+    [EmployeeID] int  NOT NULL ,
+    [ManagerID] int  NOT NULL ,
+    [FirstName] varchar(50)  NOT NULL ,
+    [LastName] varchar(50)  NOT NULL ,
+    [FullName] varchar(50)  NOT NULL ,
+    [JobTitle] varchar(50)  NOT NULL ,
+    [OrganizationLevel] int  NOT NULL ,
+    [MaritalStatus] varchar(50)  NOT NULL ,
+    [Gender] varchar(50)  NOT NULL ,
+    [Territory] varchar(50)  NOT NULL ,
+    [Country] varchar(50)  NOT NULL ,
+    [Group] varchar(50)  NOT NULL ,
+    CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED (
+        [EmployeeID] ASC
+    )
+)
+
+-- OrderDetail Table
+CREATE TABLE [OrderDetail] (
+    [SalesOrderID] int  NOT NULL ,
+    [SalesOrderDetailID] int  NOT NULL ,
+    [OrderDate] date  NOT NULL ,
+    [DueDate] date  NOT NULL ,
+    [ShipDate] date  NOT NULL ,
+    [EmployeeID] int  NOT NULL ,
+    [CustomerID] int  NOT NULL ,
+    [Subtotal] decimal  NOT NULL ,
+    [TaxAmt] decimal  NOT NULL ,
+    [Freight] decimal  NOT NULL ,
+    [TotalDue] decimal  NOT NULL ,
+    [ProductID] int  NOT NULL ,
+    [OrderQty] int  NOT NULL ,
+    [UnitPrice] decimal  NOT NULL ,
+    [UnitPriceDiscount] decimal  NOT NULL ,
+    [LineTotal] decimal  NOT NULL ,
+    CONSTRAINT [PK_OrderDetail] PRIMARY KEY CLUSTERED (
+        [SalesOrderDetailID] ASC
+    )
+)
+
+-- ProductCategory Table
+CREATE TABLE [ProductCategory] (
+    [CategoryID] int  NOT NULL ,
+    [CategoryName] varchar(200)  NOT NULL ,
+    CONSTRAINT [PK_ProductCategory] PRIMARY KEY CLUSTERED (
+        [CategoryID] ASC
+    )
+)
+
+-- Product Table
+CREATE TABLE [Product] (
+    [ProductID] int  NOT NULL ,
+    [ProductNumber] varchar(200)  NOT NULL ,
+    [ProductName] varchar(200)  NOT NULL ,
+    [ModelName] varchar(200)  NOT NULL ,
+    [MakeFlag] boolean  NOT NULL ,
+    [StandardCost] decimal  NOT NULL ,
+    [ListPrice] decimal  NOT NULL ,
+    [SubCategoryID] int  NOT NULL ,
+    CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC
+    )
+)
+
+-- ProductSubcategory Table
+CREATE TABLE [ProductSubcategory] (
+    [SubCategoryID] int  NOT NULL ,
+    [CategoryID] int  NOT NULL ,
+    [SubCategoryName] varchar(200)  NOT NULL ,
+    CONSTRAINT [PK_ProductSubcategory] PRIMARY KEY CLUSTERED (
+        [SubCategoryID] ASC
+    )
+)
+
+-- VendorProduct Table
+CREATE TABLE [VendorProduct] (
+    [ProductID] int  NOT NULL ,
+    [VendorID] int  NOT NULL 
+)
+
+-- Vendor Table
+CREATE TABLE [Vendor] (
+    [VendorID] int  NOT NULL ,
+    [VendorName] varchar(200)  NOT NULL ,
+    [AccountNumber] varchar(200)  NOT NULL ,
+    [CreditRating] int  NOT NULL ,
+    [ActiveFlag] boolean  NOT NULL ,
+    CONSTRAINT [PK_Vendor] PRIMARY KEY CLUSTERED (
+        [VendorID] ASC
+    )
+)
+
+ALTER TABLE [OrderDetail] WITH CHECK ADD CONSTRAINT [FK_OrderDetail_EmployeeID] FOREIGN KEY([EmployeeID])
+REFERENCES [Employee] ([EmployeeID])
+
+ALTER TABLE [OrderDetail] CHECK CONSTRAINT [FK_OrderDetail_EmployeeID]
+
+ALTER TABLE [OrderDetail] WITH CHECK ADD CONSTRAINT [FK_OrderDetail_CustomerID] FOREIGN KEY([CustomerID])
+REFERENCES [Customer] ([CustomerID])
+
+ALTER TABLE [OrderDetail] CHECK CONSTRAINT [FK_OrderDetail_CustomerID]
+
+ALTER TABLE [Product] WITH CHECK ADD CONSTRAINT [FK_Product_SubCategoryID] FOREIGN KEY([SubCategoryID])
+REFERENCES [ProductSubcategory] ([SubCategoryID])
+
+ALTER TABLE [Product] CHECK CONSTRAINT [FK_Product_SubCategoryID]
+
+ALTER TABLE [ProductSubcategory] WITH CHECK ADD CONSTRAINT [FK_ProductSubcategory_CategoryID] FOREIGN KEY([CategoryID])
+REFERENCES [ProductCategory] ([CategoryID])
+
+ALTER TABLE [ProductSubcategory] CHECK CONSTRAINT [FK_ProductSubcategory_CategoryID]
+
+ALTER TABLE [VendorProduct] WITH CHECK ADD CONSTRAINT [FK_VendorProduct_ProductID] FOREIGN KEY([ProductID])
+REFERENCES [Product] ([ProductID])
+
+ALTER TABLE [VendorProduct] CHECK CONSTRAINT [FK_VendorProduct_ProductID]
+
+ALTER TABLE [VendorProduct] WITH CHECK ADD CONSTRAINT [FK_VendorProduct_VendorID] FOREIGN KEY([VendorID])
+REFERENCES [Vendor] ([VendorID])
+
+ALTER TABLE [VendorProduct] CHECK CONSTRAINT [FK_VendorProduct_VendorID]
+
+COMMIT TRANSACTION QUICKDBD
